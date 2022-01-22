@@ -17,7 +17,10 @@ RUN apt-get update && \
   gdb \
   python3-dbg
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND "noninteractive"
+ENV TZ "America/Los_Angeles"
 
 # install Python
 RUN apt-get update && \
