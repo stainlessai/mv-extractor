@@ -92,7 +92,8 @@ cd "$INSTALL_BASE_DIR"/ffmpeg_sources/ffmpeg && \
 --pkg-config-flags="--static" \
 --extra-cflags="-I$INSTALL_BASE_DIR/ffmpeg_build/include -static" \
 --extra-ldflags="-L$INSTALL_BASE_DIR/ffmpeg_build/lib -static" \
---extra-libs="-lpthread -lm" \
+--extra-libs="-lpthread -lm -lz -ldl" \
+--ld="g++" \
 --bindir="$INSTALL_BASE_DIR/bin" \
 --enable-gpl \
 --enable-libfreetype \
