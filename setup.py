@@ -29,6 +29,6 @@ setup (name = 'mv_extractor',
        description = ('Reads video frames and MPEG-4/H.264 motion vectors.'),
        keywords=['motion vector', 'video capture', 'mpeg4', 'h.264', 'compressed domain'],
        ext_modules = [mv_extractor],
-       python_requires='>=3.6, <3.8',
+       python_requires='>=3.6',
        setup_requires=['wheel==0.33.6', 'numpy>=1.17.0,<1.18'],
        install_requires=['pkgconfig>=1.5.1,<1.6', 'numpy>=1.17.0,<1.18', 'opencv-python>=4.1.0.25,<4.2'])

@@ -41,7 +41,6 @@ RUN apt-get update && \
     libswscale-dev \
     libmp3lame-dev \
     zlib1g-dev \
-    libx264-dev \
     libsdl2-dev \
     libvpx-dev \
     libvdpau-dev \
@@ -74,7 +73,6 @@ COPY src /home/video_cap/src/
 
 # Install video_cap Python module
 COPY vid.mp4 /home/video_cap
-RUN cd /home/video_cap && \
-  python3 setup.py install
+RUN cd /home/video_cap && python3 setup.py install
 
 CMD ["sh", "-c", "tail -f /dev/null"]
