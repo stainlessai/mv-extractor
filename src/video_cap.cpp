@@ -73,6 +73,7 @@ bool VideoCap::open(const char *url) {
     AVStream *st = NULL;
     int enc_width, enc_height, idx;
     char *override_opts;
+    char *print_opts;
 
     this->release();
 
@@ -89,6 +90,10 @@ bool VideoCap::open(const char *url) {
         // Use default
         av_dict_set(&(this->opts), "rtsp_transport", "tcp", 0); // use tcp
         av_dict_set(&(this->opts), "stimeout", "5000000", 0); // set timeout to 5 sec
+        
+        av_dict_get_string(this->opts, &print_opts, ';', '|');
+        std::cout << "[VideoCap] Using default ffmpeg opts: " << print_opts << std::endl;
+
     }
     else {
         // Use custom
@@ -99,7 +104,12 @@ bool VideoCap::open(const char *url) {
         if (timeout == NULL) {
             av_dict_set(&(this->opts), "stimeout", "5000000", 0);
         }
+
+        av_dict_get_string(this->opts, &print_opts, ';', '|');
+        std::cout << "[VideoCap] Using custom ffmpeg opts: " << print_opts << std::endl;
     }
+
+
     if (avformat_open_input(&(this->fmt_ctx), url, NULL, &(this->opts)) < 0)
         goto error;
 
