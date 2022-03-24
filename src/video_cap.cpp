@@ -82,10 +82,16 @@ bool VideoCap::open(const char *url) {
 
     this->url = url;
 
-    // Override opts using the FFMPEG_CAPTURE_OPTIONS env variable
+    // Allow user to override opts using the FFMPEG_CAPTURE_OPTIONS env variable
     // Equivalent to OPENCV_FFMPEG_CAPTURE_OPTIONS
     override_opts = getenv("FFMPEG_CAPTURE_OPTIONS");
     if (override_opts == NULL) {
+        // Use default
+        av_dict_set(&(this->opts), "rtsp_transport", "tcp", 0); // use tcp
+        av_dict_set(&(this->opts), "stimeout", "5000000", 0); // set timeout to 5 sec
+    }
+    else {
+        // Use custom
         av_dict_parse_string(&(this->opts), override_opts, ";", "|", 0);
 
         // use default timeout if not set by user
@@ -93,13 +99,6 @@ bool VideoCap::open(const char *url) {
         if (timeout == NULL) {
             av_dict_set(&(this->opts), "stimeout", "5000000", 0);
         }
-    }
-    else {
-        // Default opts
-        // open RTSP stream with TCP
-        av_dict_set(&(this->opts), "rtsp_transport", "tcp", 0);
-        // set timeout to 5 sec
-        av_dict_set(&(this->opts), "stimeout", "5000000", 0);
     }
     if (avformat_open_input(&(this->fmt_ctx), url, NULL, &(this->opts)) < 0)
         goto error;
